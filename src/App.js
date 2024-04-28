@@ -12,7 +12,7 @@ import RegisterPage from "./pages/register/Registerpage";
 function App() {
   return (
     <Router>
-      <Navbar />  //Add this
+      <Navbar />
       <Routes>
         <Route path='/' element={<Homepage />} />
         <Route path='/register' element={<RegisterPage />} />
