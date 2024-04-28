@@ -1,6 +1,15 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 const RegisterPage = () => {
+    //Logic Section
+
+    // make a useState for 5 fields
+    const [firstName, setFirstName] = useState('')
+    const [lastName, setLastName] = useState('')
+    const [email, setEmail] = useState('')
+    const [password, setPassword] = useState('')
+    const [confirmPassword, setConfirmPassword] = useState('')
+
     return (
         <><div className='container mt-2'>
             <h1>Create an account</h1>
@@ -28,5 +37,5 @@ const RegisterPage = () => {
 export default RegisterPage;
 
 //step 1 : make a Complete ui of page (Fields,buttons etc)done
-// step 2:input (type):make a state
+// step 2:input (type):make a state done 
 // step 3:On change - set the value to the state
