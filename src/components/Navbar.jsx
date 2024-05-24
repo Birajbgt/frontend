@@ -2,6 +2,9 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 
 const Navbar = () => {
+
+    // get user from local storage
+    const user = JSON.parse(localStorage.getItem('user'))
     return (
         <>
             <div className='container'>
@@ -21,8 +24,23 @@ const Navbar = () => {
                                 </li>
                             </ul>
                             <form className="d-flex" role="search">
-                                <Link to={'/login'} className="btn btn-primary" type="submit">Login</Link>
-                                <Link to={'/register'} className="btn btn-success ms-2" type="submit">Register</Link>
+                                {
+                                    user ? (<>
+                                        <div class="dropdown">
+                                            <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                                Welcome, {user.firstName}!
+                                            </button>
+                                            <ul class="dropdown-menu">
+                                                <li><a class="dropdown-item" href="#">Action</a></li>
+                                                <li><a class="dropdown-item" href="#">Another action</a></li>
+                                                <li><a class="dropdown-item" href="#">Something else here</a></li>
+                                            </ul>
+                                        </div></>) :
+                                        (<>
+                                            <Link to={'/login'} className="btn btn-primary" type="submit">Login</Link>
+                                            <Link to={'/register'} className="btn btn-success ms-2" type="submit">Register</Link>
+                                        </>)
+                                }
                             </form>
                         </div>
                     </div>

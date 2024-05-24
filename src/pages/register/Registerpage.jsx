@@ -1,130 +1,174 @@
 import React, { useState } from 'react';
+import { toast } from "react-toastify";
+import { registerUserApi } from '../../components/Api';
+
 
 const RegisterPage = () => {
-    //Logic Section
+    //Logic section
 
-    // make a useState for 5 fields
-    const [firstName, setFirstName] = useState('')
-    const [lastName, setLastName] = useState('')
-    const [email, setEmail] = useState('')
-    const [password, setPassword] = useState('')
-    const [confirmPassword, setConfirmPassword] = useState('')
+    // Make a useState for 5 fields
+    const [firstname, setFirstName] = useState("");
+    const [lastname, setLastName] = useState("");
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
+    const [confirmPassword, setConfirmPassword] = useState("");
 
-    // Use State for error Message
-    const [firstNameError, setFirstNameError] = useState('')
-    const [lastNameError, setLastNameError] = useState('')
-    const [emailError, setEmailError] = useState('')
-    const [passwordError, setPasswordError] = useState('')
-    const [confirmpasswordError, setConfirmPasswordError] = useState('')
+    // UseState for error messages
+    const [firstNameError, setFirstNameError] = useState("");
+    const [lastNameError, setLastNameError] = useState("");
+    const [emailError, setEmailError] = useState("");
+    const [passwordError, setPasswordError] = useState("");
+    const [confirmPasswordError, setConfirmPasswordError] = useState("");
 
-    // make a each function for changing the value
+    // Make functions for each changing the values
 
-    const handleFirstName = (e) => {
+    const handleFirstname = (e) => {
         setFirstName(e.target.value);
+    };
 
-    }
-    const handleLastName = (e) => {
+    const handleLastname = (e) => {
         setLastName(e.target.value);
+    };
 
-    }
     const handleEmail = (e) => {
         setEmail(e.target.value);
-
-    }
+    };
     const handlePassword = (e) => {
         setPassword(e.target.value);
-
-    }
+    };
     const handleConfirmPassword = (e) => {
         setConfirmPassword(e.target.value);
+    };
 
-    }
     //validation
     var validate = () => {
         var isValid = true;
 
-        //validate the first name 
-        if (firstName.trim() === '') {
-            setFirstNameError("First name is Required!")
+        // validate the first name
+        if (firstname.trim() === "") {
+            setFirstNameError("First name is required");
             isValid = false;
         }
-        if (lastName.trim() === '') {
-            setLastNameError("Last name is Required!")
+
+        // validate the last name
+        if (lastname.trim() === "") {
+            setLastNameError("Last name is required");
             isValid = false;
         }
-        if (email.trim() === '') {
-            setEmailError("Email is Required!")
+
+        // validate the email
+        if (email.trim() === "") {
+            setEmailError("Email is required");
             isValid = false;
         }
-        if (password.trim() === '') {
-            setPasswordError("Password name is Required!")
+
+        // validate the password
+        if (password.trim() === "") {
+            setPasswordError("password is required");
             isValid = false;
         }
-        if (confirmPassword.trim() === '') {
-            setConfirmPasswordError("Confirm Password name is Required!")
+
+        // validate the confirm password
+        if (confirmPassword.trim() === "") {
+            setConfirmPasswordError("Confirm password is required");
             isValid = false;
         }
         if (confirmPassword.trim() !== password.trim()) {
-            setConfirmPasswordError("Password and confirm password dosenot match")
+            setConfirmPasswordError("Password and confirm password doesnot match");
             isValid = false;
         }
         return isValid;
-
-    }
-
-    //submit button function
+    };
+    //Submit button function
     const handleSubmit = (e) => {
-        e.preventDefault()
+        e.preventDefault();
 
-        //validate
-
+        // validate
         var isValidated = validate();
         if (!isValidated) {
-            return
+            return;
         }
 
-        console.log(firstName, lastName, email, password, confirmPassword)
-    }
+        // sending request to the api
 
+        //Making json object
+        const data = {
+            "firstName": firstname,
+            "lastName": lastname,
+            "email": email,
+            "password": password
+        }
+
+        registerUserApi(data).then((res) => {
+
+            // Received Data: success, message
+
+            if (res.data.success === false) {
+                toast.error(res.data.message)
+            } else {
+                toast.success(res.data.message)
+            }
+        })
+
+
+
+    };
     return (
-        <><div className='container mt-2'>
-            <h1>Create an account</h1>
+        <>
+            <div className="container mt-2">
+                <h1>Create an Account!</h1>
+                <form className="w-50">
+                    <label>Firstname :{firstname} </label>
+                    <input
+                        onChange={handleFirstname}
+                        type="text"
+                        className="form-control"
+                        placeholder="Enter your first name"
+                    />
+                    {firstNameError && <p className="text-danger">{firstNameError}</p>}
 
-            <form className='w-50'>
-                <label > First Name :{firstName}</label>
-                <input onChange={handleFirstName} type="text" className='form-control' placeholder="Enter your first Name" />
-                {
-                    firstNameError && <p className='text-danger'>{firstNameError}</p>
-                }
-                <label className="mt-2 "> Last Name:{lastName}</label>
-                <input onChange={handleLastName} type="text" className='form-control' placeholder="Enter your last Name" />
-                {
-                    lastNameError && <p className='text-danger'>{lastNameError}</p>
-                }
-                <label className="mt-2"> Email:{email}</label>
-                <input onChange={handleEmail} type="text" className='form-control' placeholder="Enter your Email" />
-                {
-                    emailError && <p className='text-danger'>{emailError}</p>
-                }
-                <label className="mt-2"> Password:{password}</label>
-                <input onChange={handlePassword} type="text" className='form-control' placeholder="Enter your Password" />
-                {
-                    passwordError && <p className='text-danger'>{passwordError}</p>
-                }
-                <label className="mt-2"> Confirm Password:{confirmPassword}</label>
-                <input onChange={handleConfirmPassword} type="text" className='form-control' placeholder="Enter your Confirm Password" />
-                {
-                    confirmpasswordError && <p className='text-danger'>{confirmpasswordError}</p>
-                }
-                <button onClick={handleSubmit} className='btn btn-dark mt-3 w-100'>Create an account</button>
-
-            </form>
-        </div>
-
-
+                    <label className="mt-2">Lastname : {lastname}</label>
+                    <input
+                        onChange={handleLastname}
+                        type="text"
+                        className="form-control"
+                        placeholder="Enter your last name"
+                    />
+                    {lastNameError && <p className="text-danger">{lastNameError}</p>}
+                    <label className="mt-2">Email : {email}</label>
+                    <input
+                        onChange={handleEmail}
+                        type="text"
+                        className="form-control"
+                        placeholder="Enter your email"
+                    />
+                    {emailError && <p className="text-danger">{emailError}</p>}
+                    <label className="mt-2">Password :{password} </label>
+                    <input
+                        onChange={handlePassword}
+                        type="text"
+                        className="form-control"
+                        placeholder="Enter your password"
+                    />
+                    {passwordError && <p className="text-danger">{passwordError}</p>}
+                    <label className="mt-2">Confirm Password:{confirmPassword} </label>
+                    <input
+                        onChange={handleConfirmPassword}
+                        type="text"
+                        className="form-control"
+                        placeholder="Enter your confirm password"
+                    />
+                    {confirmPasswordError && (
+                        <p className="text-danger">{confirmPasswordError}</p>
+                    )}
+                    <button onClick={handleSubmit} className="btn btn-dark mt-2 w-100">
+                        Create an account
+                    </button>
+                </form>
+            </div>
         </>
-    )
-}
+    );
+};
 export default RegisterPage;
 
 //step 1 : make a Complete ui of page (Fields,buttons etc)done
