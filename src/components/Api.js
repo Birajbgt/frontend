@@ -25,4 +25,7 @@ export const createProductApi = (data) => Api.post('/api/product/create', data)
 // get all products api
 export const getAllProducts = () => Api.get('/api/product/get_all_products')
 
+// get single product
+export const getSingleProduct = (id) => Api.get(`/api/product/get_single_product/${id}`)
+
 //http://localhost:5500/test
