@@ -35,7 +35,7 @@ const Login = () => {
 
     const data = {
       "email": email,
-      "passeord": password
+      "password": password
     }
     loginUserApi(data).then((res) => {
       //recived data: success message
@@ -52,7 +52,7 @@ const Login = () => {
 
 
         // local storage set
-        localStorage.setItem('token', convertedData);
+        localStorage.setItem('user', convertedData);
 
 
       }

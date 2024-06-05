@@ -4,18 +4,18 @@ import { registerUserApi } from '../../components/Api';
 
 
 const RegisterPage = () => {
-    //Logic section
-
     // Make a useState for 5 fields
     const [firstname, setFirstName] = useState("");
     const [lastname, setLastName] = useState("");
     const [email, setEmail] = useState("");
+    const [phone, setPhone] = useState("");
     const [password, setPassword] = useState("");
     const [confirmPassword, setConfirmPassword] = useState("");
 
     // UseState for error messages
     const [firstNameError, setFirstNameError] = useState("");
     const [lastNameError, setLastNameError] = useState("");
+    const [phoneError, setPhoneError] = useState("");
     const [emailError, setEmailError] = useState("");
     const [passwordError, setPasswordError] = useState("");
     const [confirmPasswordError, setConfirmPasswordError] = useState("");
@@ -28,6 +28,10 @@ const RegisterPage = () => {
 
     const handleLastname = (e) => {
         setLastName(e.target.value);
+    };
+
+    const handlePhone = (e) => {
+        setPhone(e.target.value);
     };
 
     const handleEmail = (e) => {
@@ -56,6 +60,12 @@ const RegisterPage = () => {
             isValid = false;
         }
 
+        // validate the Phone number
+        if (phone.trim() === "") {
+            setPhoneError("Phone Number is required");
+            isValid = false;
+        }
+
         // validate the email
         if (email.trim() === "") {
             setEmailError("Email is required");
@@ -64,7 +74,7 @@ const RegisterPage = () => {
 
         // validate the password
         if (password.trim() === "") {
-            setPasswordError("password is required");
+            setPasswordError("Password is required");
             isValid = false;
         }
 
@@ -79,6 +89,7 @@ const RegisterPage = () => {
         }
         return isValid;
     };
+
     //Submit button function
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -89,29 +100,24 @@ const RegisterPage = () => {
             return;
         }
 
-        // sending request to the api
-
         //Making json object
         const data = {
-            "firstName": firstname,
-            "lastName": lastname,
-            "email": email,
-            "password": password
-        }
+            firstName: firstname,
+            lastName: lastname,
+            // phone: phone,
+            email: email,
+            password: password,
+        };
 
         registerUserApi(data).then((res) => {
-
             // Received Data: success, message
 
             if (res.data.success === false) {
-                toast.error(res.data.message)
+                toast.error(res.data.message);
             } else {
-                toast.success(res.data.message)
+                toast.success(res.data.message);
             }
-        })
-
-
-
+        });
     };
     return (
         <>
@@ -143,6 +149,14 @@ const RegisterPage = () => {
                         placeholder="Enter your email"
                     />
                     {emailError && <p className="text-danger">{emailError}</p>}
+                    <label className="mt-2">phone :{phone} </label>
+                    <input
+                        onChange={handlePhone}
+                        type="text"
+                        className="form-control"
+                        placeholder="Enter your Phone number"
+                    />
+                    {phoneError && <p className="text-danger">{phoneError}</p>}
                     <label className="mt-2">Password :{password} </label>
                     <input
                         onChange={handlePassword}

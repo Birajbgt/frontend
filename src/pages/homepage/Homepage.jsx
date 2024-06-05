@@ -2,6 +2,9 @@ import React, { useEffect } from 'react';
 import { testApi } from '../../components/Api';
 
 const Homepage = () => {
+    
+    // get user from local storage
+    const user = JSON.parse(localStorage.getItem('user'))
 
     // Print hello ! whrn page is automaticaly load
     useEffect(() => {

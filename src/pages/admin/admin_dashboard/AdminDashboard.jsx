@@ -1,6 +1,26 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
+import { toast } from "react-toastify";
+import { createProductApi, getAllProducts } from "../../../components/Api";
 
 const AdminDashboard = () => {
+
+    // 1.State for all fetched products
+    const [products, setProducts] = useState([]) //array
+
+    // 2. Call API initially (PageLoad)- Set all fetch product to state (1)
+    useEffect(() => {
+        getAllProducts().then((res) => {
+            // response : res.data.products (All Products)
+            setProducts(res.data.products)
+
+        }).catch((error) => {
+            console.log(error)
+        })
+    }, [])
+    console.log(products)
+
+
 
     // State for input fields
     const [productName, setProductName] = useState('')
@@ -24,16 +44,47 @@ const AdminDashboard = () => {
     }
 
     // handle Summit 
-    const handleSummit=(e)=>{
-        e.preventDefult()
-        console.log(
-            productName,
-            productCategory,
-            productImage,
-            productPrice,
-            productDescription
-        )
+
+
+    const handleSubmit = (e) => {
+        e.preventDefault()
+
+
+        //make a form data (text, files)
+        const formData = new FormData()
+        formData.append('productName', productName)
+        formData.append('productPrice', productPrice)
+        formData.append('productCategory', productCategory)
+        formData.append('productDescription', productDescription)
+        formData.append('productImage', productImage)
+
+
+        //Make a api call
+        createProductApi(formData).then((res) => {
+            //for successful api
+            if (res.status === 201) {
+                toast.success(res.data.message)
+            }
+        }).catch((error) => {
+            //for error status code
+
+            if (error.response) {
+                if (error.response.status === 400) {
+                    toast.warning(error.response.data.message)
+                }
+                else if (error.response.status === 500) {
+                    toast.warning(error.response.data.message)
+                } else {
+                    toast.error("Something went wrong!")
+                }
+            } else {
+                toast.error("Something went wrong!")
+            }
+
+        })
     }
+
+
 
 
     return (
@@ -104,7 +155,7 @@ const AdminDashboard = () => {
 
                                         {/* Preview image */}
                                         {
-                                            previewImage && <img src={previewImage} alt="preview image" className="img-fluid rounded mt-2" />
+                                            previewImage && <img src={previewImage} className='img-fluid rounded object-cover mt-2' alt="" />
                                         }
 
 
@@ -118,7 +169,7 @@ const AdminDashboard = () => {
                                     >
                                         Close
                                     </button>
-                                    <button onClick={handleSummit} type="button" class="btn btn-primary">
+                                    <button onClick={handleSubmit} type="button" class="btn btn-primary">
                                         Save changes
                                     </button>
                                 </div>
@@ -140,25 +191,29 @@ const AdminDashboard = () => {
                     </thead>
 
                     <tbody>
-                        <tr>
-                            <td>
-                                <img
-                                    width={"40px"}
-                                    height={"40px"}
-                                    src="https://th.bing.com/th/id/R.e20f7ec88066f86e7aad2950004169e8?rik=VsxPD3Pg4jtTLA&riu=http%3a%2f%2fupload.wikimedia.org%2fwikipedia%2fcommons%2fa%2fa9%2f20090809_Lotus_flower_2736.jpg&ehk=R%2fh6nva8bzB14hIEe1YBypqrfel6%2fmZx0SWoV5V7g0A%3d&risl=1&pid=ImgRaw&r=0"
-                                    alt=""
-                                />
-                            </td>
-                            <td>Flower</td>
-                            <td>$10</td>
-                            <td>Home Decor</td>
-                            <td>Beautiful flower vase</td>
+                        {
+                            products.map((singleProduct) => (
+                                <tr>
+                                    <td>
+                                        <img
+                                            width={"40px"}
+                                            height={"40px"}
+                                            src={`http://localhost:5500/products/${singleProduct.productImage}`}
+                                            alt=""
+                                        />
+                                    </td>
+                                    <td>{singleProduct.productName}</td>
+                                    <td>{singleProduct.productPrice}</td>
+                                    <td>{singleProduct.productCategory}</td>
+                                    <td>{singleProduct.productDescription}</td>
 
-                            <td>
-                                <button className="btn btn-primary"> Edit</button>
-                                <button className="btn btn-danger ms-2"> Delete</button>
-                            </td>
-                        </tr>
+                                    <td>
+                                        <Link to={`/admin/update/${singleProduct._id}`} className="btn btn-primary"> Edit</Link>
+                                        <button className="btn btn-danger ms-2"> Delete</button>
+                                    </td>
+                                </tr>
+                            ))
+                        }
                     </tbody>
                 </table>
             </div>
@@ -166,4 +221,11 @@ const AdminDashboard = () => {
     );
 };
 
-export default AdminDashboard;
+export default AdminDashboard
+
+// Edit product
+// Admin Dashboard (table)pro1
+// Make a route (Admin Edit product)
+// Fill all the related product
+// Edit garna milnu paryo (text,File)
+// Make backend to update aproduct
