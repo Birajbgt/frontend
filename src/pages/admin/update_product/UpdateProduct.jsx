@@ -48,7 +48,7 @@ const UpdateProduct = () => {
         <>
             <div className='container mt-3'>
 
-                <h2>Update product for <span className='text-danger'>'Flower'</span></h2>
+                <h2>Update product for <span className='text-danger'>'{productName}'</span></h2>
 
                 <div className='d-flex gap-3'>
                     <form action="">

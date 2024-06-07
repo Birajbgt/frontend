@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
-import { createProductApi, getAllProducts } from "../../../components/Api";
+import { createProductApi, deleteProduct, getAllProducts } from "../../../components/Api";
 
 const AdminDashboard = () => {
 
@@ -82,6 +82,27 @@ const AdminDashboard = () => {
             }
 
         })
+    }
+
+    // handle delete
+    const handleDelete = (id) => {
+        const confirmDialog = window.confirm("Are you sure you want to delete?")
+        if (confirmDialog) {
+            // calling api
+            deleteProduct(id).then((res) => {
+                if (res.status === 201) {
+                    toast.success(res.data.message)
+                    // reload
+                    window.location.reload()
+                }
+
+            }).catch((error) => {
+                if (error.response.status === 500) {
+                    toast.error(error.res.data.message)
+                }
+
+            })
+        }
     }
 
 
@@ -209,7 +230,7 @@ const AdminDashboard = () => {
 
                                     <td>
                                         <Link to={`/admin/update/${singleProduct._id}`} className="btn btn-primary"> Edit</Link>
-                                        <button className="btn btn-danger ms-2"> Delete</button>
+                                        <button onClick={() => handleDelete(singleProduct._id)} className="btn btn-danger ms-2"> Delete</button>
                                     </td>
                                 </tr>
                             ))
