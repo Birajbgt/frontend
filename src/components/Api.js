@@ -10,6 +10,13 @@ const Api = axios.create({
     },
 });
 
+// make a config for token 
+const config = {
+    headers: {
+        "authorization": `Bearer ${localStorage.getItem("token")}`,
+    },
+};
+
 //Test Api
 export const testApi = () => Api.get('/test');
 
@@ -23,12 +30,15 @@ export const loginUserApi = (data) => Api.post('/api/user/login', data)
 export const createProductApi = (data) => Api.post('/api/product/create', data)
 
 // get all products api
-export const getAllProducts = () => Api.get('/api/product/get_all_products')
+export const getAllProducts = () => Api.get('/api/product/get_all_products', config)
 
 // get single product
-export const getSingleProduct = (id) => Api.get(`/api/product/get_single_product/${id}`)
+export const getSingleProduct = (id) => Api.get(`/api/product/get_single_product/${id}`, config)
 
 // get delete
 export const deleteProduct = (id) => Api.delete(`/api/product/delete_product/${id}`)
+
+// get update
+export const updateProduct = (id, data) => Api.put(`/api/product/update_product/${id}`, data)
 
 //http://localhost:5500/test
