@@ -69,6 +69,9 @@ const UpdateProduct = () => {
             if (error.response.status === 500) {
                 toast.error(error.response.data.message)
             }
+            else if (error.response.status === 400) {
+                toast.error(error.response.data.message)
+            }
         })
 
     }

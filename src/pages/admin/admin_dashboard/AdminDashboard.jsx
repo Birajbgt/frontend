@@ -243,10 +243,3 @@ const AdminDashboard = () => {
 };
 
 export default AdminDashboard
-
-// Edit product
-// Admin Dashboard (table)pro1
-// Make a route (Admin Edit product)
-// Fill all the related product
-// Edit garna milnu paryo (text,File)
-// Make backend to update aproduct

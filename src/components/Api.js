@@ -39,6 +39,6 @@ export const getSingleProduct = (id) => Api.get(`/api/product/get_single_product
 export const deleteProduct = (id) => Api.delete(`/api/product/delete_product/${id}`)
 
 // get update
-export const updateProduct = (id, data) => Api.put(`/api/product/update_product/${id}`, data)
+export const updateProduct = (id, data) => Api.put(`/api/product/update_product/${id}`, data, config)
 
 //http://localhost:5500/test

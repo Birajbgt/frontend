@@ -5,6 +5,12 @@ const Navbar = () => {
     // get user data from local storage
     const user = JSON.parse(localStorage.getItem("user"));
 
+    // logout Function
+    const handleLogout = () => {
+        localStorage.clear()
+        window.location.href = '/login'
+    }
+
     return (
         <>
             <div className="container mt-2"></div>
@@ -61,9 +67,9 @@ const Navbar = () => {
                                                 </a>
                                             </li>
                                             <li>
-                                                <a class="dropdown-item" href="#">
+                                                <button onClick={handleLogout} class="dropdown-item" href="#">
                                                     Logout
-                                                </a>
+                                                </button>
                                             </li>
                                         </ul>
                                     </div>
