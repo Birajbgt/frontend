@@ -7,6 +7,8 @@ import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import './App.css';
 import Navbar from './components/Navbar';
+import ProductList from "./pages/ProductList";
+import Test from "./pages/Test";
 import AdminDashboard from "./pages/admin/admin_dashboard/AdminDashboard";
 import UpdateProduct from "./pages/admin/update_product/UpdateProduct";
 import Homepage from './pages/homepage/Homepage';
@@ -24,6 +26,8 @@ function App() {
 
             <Routes>
                 <Route>
+                    <Route path='/test' element={<Test />} />
+                    <Route path='/product' element={<ProductList />} />
                     <Route path='/' element={<Homepage />} />
                     <Route path='/register' element={<Register />} />
                     <Route path='/login' element={<Login />} />

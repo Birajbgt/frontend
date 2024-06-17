@@ -225,7 +225,7 @@ const AdminDashboard = () => {
                                     </td>
                                     <td>{singleProduct.productName}</td>
                                     <td>{singleProduct.productPrice}</td>
-                                    <td>{singleProduct.productCategory}</td>
+                                    <td>{singleProduct.productPrice}</td>
                                     <td>{singleProduct.productDescription}</td>
 
                                     <td>
