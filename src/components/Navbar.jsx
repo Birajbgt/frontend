@@ -17,7 +17,7 @@ const Navbar = () => {
             <nav className="navbar navbar-expand-lg bg-body-tertiary">
                 <div class="container-fluid">
                     <a className="navbar-brand" href="#">
-                        HAmro <span className="text-danger">Artify</span>
+                        Memory <span className="text-danger">Mate</span>
                     </a>
                     <button
                         className="navbar-toggler"
@@ -38,10 +38,15 @@ const Navbar = () => {
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="#">
-                                    Link
+                                <a class="nav-link active" aria-current="page" href="/note">
+                                    notes
+                                </a>
+                            </li><li class="nav-item">
+                                <a class="nav-link active" aria-current="page" href="/album">
+                                    Album
                                 </a>
                             </li>
+                            
                         </ul>
                         <form className="d-flex" role="search">
                             {user ? (
@@ -55,23 +60,6 @@ const Navbar = () => {
                                         >
                                             Welcome, {user.firstName}
                                         </button>
-                                        <ul class="dropdown-menu">
-                                            <li>
-                                                <a class="dropdown-item" href="#">
-                                                    Profile
-                                                </a>
-                                            </li>
-                                            <li>
-                                                <a class="dropdown-item" href="#">
-                                                    My Order
-                                                </a>
-                                            </li>
-                                            <li>
-                                                <button onClick={handleLogout} class="dropdown-item" href="#">
-                                                    Logout
-                                                </button>
-                                            </li>
-                                        </ul>
                                     </div>
                                 </>
                             ) : (
