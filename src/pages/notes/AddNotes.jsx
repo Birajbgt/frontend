@@ -61,7 +61,7 @@ const AddNotes = () => {
     return (
         <div className="container mt-3">
             <div className="d-flex justify-content-between">
-                <h3>Admin Dashboard</h3>
+                <h3>Notes</h3>
                 <button
                     type="button"
                     className="btn btn-danger"
